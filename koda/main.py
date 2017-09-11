@@ -18,7 +18,6 @@ def getDirContents(directory):
     workdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), directory)
     return [y for x in os.walk(workdir) for y in glob(os.path.join(x[0], '*.mp3'))]
 
-
 def copyFileToFolder(src, dest):
     workdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "processed", dest)
     shutil.copy2(src, workdir)
@@ -29,8 +28,6 @@ def copyFilesToKeyFolders():
 
 def main():
     copyFilesToKeyFolders()
-
-
 
 if __name__== "__main__":
   main()
