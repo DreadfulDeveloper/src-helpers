@@ -19,8 +19,12 @@ def getDirContents(directory):
     return [y for x in os.walk(workdir) for y in glob(os.path.join(x[0], '*.mp3'))]
 
 def copyFileToFolder(src, dest):
-    workdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "processed", dest)
-    shutil.copy2(src, workdir)
+    tags = EasyID3(src)
+
+    # filename = '{} - {} - {}.mp3'.format(tags['bpm'][0].encode("utf-8"), tags['title'][0].encode("utf-8"), tags['artist'][0].encode("utf-8"))
+    # destFile = os.path.join(os.path.dirname(os.path.realpath(__file__)), "processed", dest, filename)
+    destFile = os.path.join(os.path.dirname(os.path.realpath(__file__)), "processed", dest, filename)
+    shutil.copy2(src, destFile)
 
 def copyFilesToKeyFolders():
     createOutputDirs()
