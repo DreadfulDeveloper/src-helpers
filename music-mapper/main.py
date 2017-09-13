@@ -6,6 +6,7 @@ import csv
 import sys
 import os
 import pydub
+import matplotlib.pyplot as plt
 
 def moments(x):
     mean = x.mean()
@@ -83,7 +84,7 @@ def compute_chunk_features(mp3_file):
 # =======================
 
 def main():
-
+    analysis = []
     for path, dirs, files in os.walk('C:/Users/jkrogman/Downloads/scdl'):
         for f in files:
             if not f.endswith('.mp3'):
@@ -101,11 +102,14 @@ def main():
             # from the raw sound data.
             try:
                 feature_vec1, feature_vec2 = compute_chunk_features(mp3_file)
-                print feature_vec1, feature_vec2
+                analysis.append([feature_vec1[9], feature_vec2[10]])
+
             except:
                 continue
+    print analysis
+    x, y = zip(*analysis)
 
-
+    plt.scatter(x,y)
+    plt.show()
 if __name__ == '__main__':
-    print 'starting'
     main()
