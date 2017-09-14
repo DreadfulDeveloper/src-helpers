@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Honeycomb DOM view</title>
+<!--        <link rel="stylesheet" href="../common.css">
+        <link rel="stylesheet" href="index.css"> -->
+    <style>
+    * {
+          box-sizing: border-box;
+      }
+
+      html,
+      body {
+          height: 100%;
+          margin: 0;
+          color: #333;
+          font-family: sans-serif;
+          overflow: hidden;
+      }
+
+      #container {
+          display: block;
+          position: relative;
+          width: 80%;
+          height: 100%;
+          margin: 0 auto;
+          background-color: #ccc;
+          overflow: hidden;
+      }
+      .hex {
+          position: absolute;
+          width: 86.6025px; /* sqrt(3) / 2 * (size * 2) */
+          height: 50px; /* size */
+          background-color: #69c;
+          margin: 25px 0; /* size / 2 */
+      }
+
+      .hex:before,
+      .hex:after {
+          content: '';
+          position: absolute;
+          width: 0;
+          border-left: 43.3013px solid transparent; /* width / 2 */
+          border-right: 43.3013px solid transparent; /* width / 2 */
+      }
+
+      .hex:before {
+          bottom: 100%;
+          border-bottom: 25px solid #69c; /* size / 2 */
+      }
+
+      .hex:after {
+          top: 100%;
+          left: 0;
+          width: 0;
+          border-top: 25px solid #69c; /* size / 2 */
+      }
+    </style>
+    </head>
+    <body>
+        <div id="container"></div>
+        <script src="data.js"></script>
+        <script src="./honeycomb.js"></script>
+    </body>
+
+    <script>
+        var Grid = Honeycomb.Grid,
+        View = Honeycomb.View,
+        container = document.getElementById('container'),
+        rect = container.getBoundingClientRect(),
+        grid,
+        view
+
+      grid = Grid({ size: 55 })
+
+      view = View({
+        grid: grid,
+        template: function createTemplate(hex) {
+            var position = this.hexToPixel(hex),
+                div = document.createElement('div')
+                display = grid.hexToPoint(hex)
+            p = closestPoint(display, usable)
+            //console.log(p);
+            removePoint(p);
+            div.innerHTML = labels[p];
+            div.classList.add('hex')
+            div.style.left = position.x  + 'px'
+            div.style.top = position.y  + 'px'
+
+            return div
+        },
+        container: container,
+        origin: {
+            x: rect.width / 2,
+            y: rect.height / 2
+        }
+      })
+
+      gThang = grid.hexagon({ radius: 3 });
+      view.renderHexes(gThang);
+//      console.log(grid);
+//      for(var xi = 0; xi < gThang.length; xi++){
+//        console.log(grid.hexToPoint(gThang[xi]));
+//      }
+
+
+    </script>
+</html>

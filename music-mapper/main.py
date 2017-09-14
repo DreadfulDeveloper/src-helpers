@@ -84,7 +84,11 @@ def compute_chunk_features(mp3_file):
 # =======================
 
 def main():
+    x1 = []
+    x2 = []
+    labels = []
     analysis = []
+
     for path, dirs, files in os.walk('C:/Users/jkrogman/Downloads/scdl'):
         for f in files:
             if not f.endswith('.mp3'):
@@ -102,14 +106,20 @@ def main():
             # from the raw sound data.
             try:
                 feature_vec1, feature_vec2 = compute_chunk_features(mp3_file)
-                analysis.append([feature_vec1[9], feature_vec2[10]])
+                x1.append(feature_vec1[9])
+                x2.append(feature_vec2[10])
+                labels.append(track)
 
             except:
                 continue
-    print analysis
-    x, y = zip(*analysis)
 
-    plt.scatter(x,y)
-    plt.show()
+
+    # x, y = zip(*analysis)
+
+    print [x1, x2]
+    print labels
+    print '\n'
+    #print x2
 if __name__ == '__main__':
+    print 'starting'
     main()
